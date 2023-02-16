@@ -339,7 +339,7 @@ public function getdefectID($id)
 	}
 
 	public function insertTAGFA($codemaster,$tagfa,$linecd,$plandate,$seqplan,$partno,$actualdate1,$snp
-	,$lotno,$actualdate2,$seqactual,$plant,$box)
+	,$lotno,$actualdate2,$seqactual,$plant,$box,$lotcur)
 	{
 
 		$sql = "EXEC [dbo].[INSERT_INFO_TAG_FA] @part_code_master= '{$codemaster}', @part_tag_fa= '{$tagfa}', @part_linecd= '{$linecd}',@part_plan_date= '{$plandate}'
@@ -351,7 +351,8 @@ public function getdefectID($id)
 		, @part_actual_date2= '{$actualdate2}'
 		, @part_seq_actual= '{$seqactual}'
 		, @part_plant= '{$plant}'
-		, @part_box= '{$box}'";
+		, @part_box= '{$box}'
+		, @lot_cur= '{$lotcur}'";
 	 	$res = $this->db->query($sql);														
 		return $res;
 	}
@@ -410,6 +411,26 @@ public function getdefectID($id)
 	}
 
 
+	public function insertTagQgateComplete($oldtag,$countbox,$tagcount,$empcode,$tagcomplete)
+	{
+
+		$sql = "EXEC [dbo].[INSERT_TAG_QGATE_COMPLETE] @old_tag= '{$oldtag}', @count_box= '{$countbox}', @tag_count='{$tagcount}', @emp_code='{$empcode}', @tag_complete='{$tagcomplete}'";
+	 	$res = $this->db->query($sql);														
+		return $res;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	///update_DATA
@@ -435,6 +456,22 @@ public function getdefectID($id)
 		}
 
 	}
+
+	public function updateSelectPart($partno,$macadd){
+		$sql = "EXEC [dbo].[UPDATE_CONFIG_SELECT_PART] @select_part= '{$partno}' , @mac_address ='{$macadd}'";
+		$res = $this->db->query($sql);
+		if($res){
+		 return true;
+		}else{
+		 return false; 
+		}
+
+	}
+
+
+
+
+
 
 	public function updateQRProduct($oldtagfaid,$stationid, $workshift, $productcount
 	, $productcheckcount,  $staffcode,$productqr ,$timecheck)

@@ -59,6 +59,18 @@ class updatedata extends CI_Controller
 	   }
 
 
+	   public function updateSelectPart(){
+		$partno =  $_GET["partno"];
+		$macadd =  $_GET["macadd"];
+
+          
+		$res= $this->mainoffice_model->updateSelectPart($partno,$macadd);
+		echo json_encode($res);
+		
+	   }
+
+
+
 
 	   public function updateFlgProduct(){
 		$productid =  $_GET["productid"];

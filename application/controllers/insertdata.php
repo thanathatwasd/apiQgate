@@ -52,10 +52,10 @@ class insertdata extends CI_Controller
           $seqactual = $_GET["seqactual"];
           $plant = $_GET["plant"];
           $box = $_GET["box"];
-
+          $lotcur = $_GET["lotcur"];
 
         $rs = $this->mainoffice_model->insertTAGFA($codemaster,$tagfa,$linecd,$plandate,$seqplan,$partno,$actualdate1,$snp
-        ,$lotno,$actualdate2,$seqactual,$plant,$box);
+        ,$lotno,$actualdate2,$seqactual,$plant,$box,$lotcur);
 		echo json_encode($rs);
 
     }
@@ -170,6 +170,20 @@ echo "staffname===> ". $staffname;
    
          
         $rs = $this->mainoffice_model->insertlogreprintDefect($tagconpleteid,$empcode);
+		echo json_encode($rs);
+
+    }
+
+
+
+    public function insertTagQgateComplete()
+    {
+          $oldtag = $_GET["oldtag"];
+          $countbox = $_GET["countbox"];
+          $tagcount = $_GET["tagcount"];
+          $empcode = $_GET["empcode"];
+          $tagcomplete = $_GET["tagcomplete"];
+        $rs = $this->mainoffice_model->insertTagQgateComplete($oldtag,$countbox,$tagcount,$empcode,$tagcomplete);
 		echo json_encode($rs);
 
     }

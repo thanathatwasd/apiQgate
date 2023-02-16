@@ -607,7 +607,7 @@ class getdata extends CI_Controller
      public function GETLOT_TBKKFATHAILAND()
  {
   parse_str($_SERVER['QUERY_STRING'], $_GET); 
-  $lot_dt = $_GET["lot_dt"];
+  $lot_dt = $_GET["timecur"];
   $_YEARS = array ('J', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I');
   $_MONTH = array ('L', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K');
   $D = date('d',strtotime($lot_dt));
