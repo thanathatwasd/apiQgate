@@ -255,6 +255,7 @@ class mainoffice_model extends CI_Model
 	}
 	public function getDefect()
 	{
+		
 		$sql = "EXEC [dbo].[GET_DEFECT]";
 		$res = $this->db->query($sql);
 		$row = $res->result_array();
@@ -590,6 +591,14 @@ public function getdefectID($id)
 	}
 
 
+	public function insertlogreprintDefect($tagconpleteid,$empcode)
+	{
+
+		$sql = "EXEC [dbo].[INSERT_LOG_REPRINT_TAG_DEFECT] @tag_complete= '{$tagconpleteid}', @staff_code= '{$empcode}'";
+	 	$res = $this->db->query($sql);														
+		return $res;
+	}
+
 
 	public function updateConfigMacAddress($phase,$zone,$station,$macaddress,$empcode){
 		
@@ -625,6 +634,18 @@ public function getdefectID($id)
 																	
 		return $row;
 	}
+
+	public function getTagByQrProductDefect($qrproduct)
+	{
+		
+		
+		$sql = "EXEC [dbo].[GET_REPRINT_BY_QR_PRODUCT_DEFECT] @qr_product= '{$qrproduct}'";
+	 	$res = $this->db->query($sql);
+		$row = $res->result_array();
+																	
+		return $row;
+	}
+
 
 
 

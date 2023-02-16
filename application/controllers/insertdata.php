@@ -101,13 +101,10 @@ class insertdata extends CI_Controller
           $workshift = $_GET["workshift"];
           $workdate = $_GET["workdate"];
           $staffname = $_GET["staffname"];
-echo "stationid===> ".$stationid;
-echo  "workshift===> ".$workshift;
-echo  "workdate===> ".$workdate;
-echo "staffname===> ". $staffname;
+
 
         $rs = $this->mainoffice_model->insertDuringTime($stationid,$workshift,$workdate,$staffname);
-
+        echo json_encode($rs);
     }
 
 
@@ -160,6 +157,19 @@ echo "staffname===> ". $staffname;
    
          
         $rs = $this->mainoffice_model->insertlogreprint($tagconpleteid,$empcode);
+		echo json_encode($rs);
+
+    }
+
+    public function insertlogreprintDefect()
+    {
+          $tagconpleteid = $_GET["tagconpleteid"];
+          $empcode = $_GET["empcode"];
+
+
+   
+         
+        $rs = $this->mainoffice_model->insertlogreprintDefect($tagconpleteid,$empcode);
 		echo json_encode($rs);
 
     }

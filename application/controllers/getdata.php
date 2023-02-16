@@ -148,7 +148,18 @@ class getdata extends CI_Controller
           }
      }
 
+     public function getDefect()
+     {
+         
+          $rs = $this->mainoffice_model->getDefect();
 
+          if (empty( $rs  )) {
+               echo "0";
+          } else {
+               echo json_encode( $rs );
+          }
+     }
+     
 
      public function getdefectID()
      {
@@ -389,6 +400,11 @@ class getdata extends CI_Controller
 
 
           $rs = $this->mainoffice_model->getDuringTime($stationid,$workdate,$workshift);
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
      }
         
      public function getIdPhaseAndZone()
@@ -572,6 +588,21 @@ class getdata extends CI_Controller
                echo json_encode($rs);
           }
      }
+     public function getTagByQrProductDefect()
+     {
+       
+          $qrproduct = $_GET["qrproduct"];
+
+
+          $rs = $this->mainoffice_model->getTagByQrProductDefect($qrproduct);
+
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
+     }
+
 
      public function GETLOT_TBKKFATHAILAND()
  {
