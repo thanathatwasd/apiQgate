@@ -488,12 +488,11 @@ class getdata extends CI_Controller
      public function getBoxNoToReprintTag()
      {
        
-          $phase = $_GET["phase"];
-          $zone = $_GET["zone"];
+
           $dateselect = $_GET["dateselect"];
           $parno = $_GET["parno"];
           $lotno = $_GET["lotno"];
-          $rs = $this->mainoffice_model->getBoxNoToReprintTag($phase, $zone,$dateselect,$parno,$lotno);
+          $rs = $this->mainoffice_model->getBoxNoToReprintTag($dateselect,$parno,$lotno);
 
           if (empty($rs)) {
                echo "0";
@@ -616,7 +615,53 @@ class getdata extends CI_Controller
   //echo $_YEARS[($Y % 10)].$_MONTH[($M % 12)].$D; exit();
   echo $_YEARS[($Y % 10)].$_MONTH[($M % 12)].$D;
  }
+ public function getQRProductToGenQr()
+     {
+          $tagfa = $_GET["tagfa"];
+          $rs = $this->mainoffice_model->getQRProductToGenQr($tagfa);
 
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
+     }
+
+     public function getDefectCount()
+     {
+       
+
+         
+          $productdefectid = $_GET["productdefectid"];
+          
+          $datecurrent = $_GET["datecurrent"];
+          $producttype = $_GET["producttype"];
+
+
+          $rs = $this->mainoffice_model->getDefectCount($productdefectid,$datecurrent,$producttype);
+
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
+     }
+
+
+     public function getInfoDefectCount()
+     {
+       
+
+          $defectgroup = $_GET["defectgroup"];
+          $datecurr = $_GET["datecurr"];
+          $rs = $this->mainoffice_model->getDefectCount($defectgroup,$datecurr);
+
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
+     }
 
 }
 ?>

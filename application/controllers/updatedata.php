@@ -93,6 +93,16 @@ class updatedata extends CI_Controller
 		
 	   }
 
+	   
+	   public function updateStatusDefectCount(){
+		$defectgroup =  $_GET["defectgroup"];
+		$staffcode =  $_GET["staffcode"];
+          
+		$res= $this->mainoffice_model->updateStatusDefectCount($defectgroup,$staffcode );
+		echo json_encode($res);
+		
+	   }
+
 	   public function updateConfigMacAddress(){
 		
 		$phase = $_GET["phase"];
@@ -103,6 +113,19 @@ class updatedata extends CI_Controller
 		
 		
 		$res= $this->mainoffice_model->updateConfigMacAddress($phase,$zone,$station,$macaddress,$empcode);
+		echo json_encode($res);
+		
+	   }
+
+	   public function updateDefectCount(){
+		
+		$defectgroupid = $_GET["defectgroupid"];
+		
+		$countdefect = $_GET["countdefect"];
+		$staffcode = $_GET["staffcode"];
+		$datatecurrent = $_GET["datatecurrent"];
+		$producttype = $_GET["producttype"];
+		$res= $this->mainoffice_model->updateDefectCount($defectgroupid,$countdefect,$staffcode,$datatecurrent,$producttype);
 		echo json_encode($res);
 		
 	   }

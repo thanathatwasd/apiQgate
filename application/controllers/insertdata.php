@@ -35,7 +35,19 @@ class insertdata extends CI_Controller
 
     }
 
+    
+    public function insertInfoDefectCount()
+    {
+          $defectgroupid = $_GET["defectgroupid"];
+          
+          $productype = $_GET["productype"];
+          $countdefect = $_GET["countdefect"];
+          $staffcode = $_GET["staffcode"];
+          $partno = $_GET["partno"];
+        $rs = $this->mainoffice_model->insertInfoDefectCount($defectgroupid,$productype,$countdefect,$staffcode,$partno);
+		echo json_encode($rs);
 
+    }
 
     public function insertTAGFA()
     {
@@ -113,8 +125,7 @@ class insertdata extends CI_Controller
     {
           $duringtimeid = $_GET["duringtimeid"];
           $staffname = $_GET["staffname"];
-          echo  "duringtimeid===> ".$duringtimeid;
-echo "staffname===> ". $staffname;
+
         $rs = $this->mainoffice_model->insertStaffWorker($duringtimeid,$staffname);
 		echo json_encode($rs);
 

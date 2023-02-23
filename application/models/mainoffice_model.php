@@ -272,7 +272,15 @@ class mainoffice_model extends CI_Model
 																
 		return $row;
 	}
+	public function getDefectCount($productdefectid,$datecurrent,$producttype)
+	{
 
+		$sql = "EXEC [dbo].[GET_DEFECT_COUNT] @product_defectid='{$productdefectid}', @date_current='{$datecurrent}', @product_type='{$producttype}'";
+	 	$res = $this->db->query($sql);
+		$row = $res->result_array();
+																
+		return $row;
+	}
 
 public function getdefectID($id)
 	{
@@ -385,7 +393,7 @@ public function getdefectID($id)
 	public function insertInfoDefect($defectid,$qrid,$numng,$staffname)
 	{
 
-		$sql = "EXEC [dbo].[INSERT_INFO_DEFECT_NG] @defect_id= '{$defectid}', @qrproduct_id= '{$qrid}', @num_ng='{$numng}', @staff_code='{$staffname}'";
+		$sql = "EXEC [dbo].[INSERT_INFO_DEFECT] @defect_id= '{$defectid}', @qrproduct_id= '{$qrid}', @num_ng='{$numng}', @staff_code='{$staffname}'";
 	 	$res = $this->db->query($sql);														
 		return $res;
 	}
@@ -405,7 +413,7 @@ public function getdefectID($id)
 	public function insertDefectcount($stationid,$defectcodeid,$numdefect,$staffname,$ngornc)
 	{
 
-		$sql = "EXEC [dbo].[INSERT_DEFECT_COUNT] @station_id= '{$stationid}', @defectcode_id= '{$defectcodeid}', @num_defect='{$numdefect}', @staff_code='{$staffname}', @ng_or_nc='{$ngornc}'";
+		$sql = "EXEC [dbo].[INSERT_DEFECT_COUNT] @defectgroup_id= '{$stationid}', @defectcode_id= '{$defectcodeid}', @num_defect='{$numdefect}', @staff_code='{$staffname}', @ng_or_nc='{$ngornc}'";
 	 	$res = $this->db->query($sql);														
 		return $res;
 	}
@@ -419,6 +427,15 @@ public function getdefectID($id)
 		return $res;
 	}
 
+
+
+	public function insertInfoDefectCount($defectgroupid,$productype,$countdefect,$staffcode,$partno)
+	{
+
+		$sql = "EXEC [dbo].[INSERT_INFO_DEFECT_COUNT] @defectgroup_id= '{$defectgroupid}', @product_type= '{$productype}', @count_defect= '{$countdefect}', @staff_code='{$staffcode}', @part_no='{$partno}'";
+	 	$res = $this->db->query($sql);														
+		return $res;
+	}
 
 
 
@@ -468,6 +485,17 @@ public function getdefectID($id)
 
 	}
 
+	public function updateDefectCount($defectgroupid,$countdefect,$staffcode,$datatecurrent,$producttype)
+	{
+		$sql = "EXEC [dbo].[UPDATE_DEFECT_COUNT] @defectgroup_id= '{$defectgroupid}' , @count_defect ='{$countdefect}', @staff_code ='{$staffcode}', @date_current ='{$datatecurrent}', @product_type ='{$producttype}'";
+		$res = $this->db->query($sql);
+		if($res){
+		 return true;
+		}else{
+		 return false; 
+		}
+
+	}
 
 
 
@@ -520,6 +548,17 @@ public function getdefectID($id)
 	
 	public function updateFlgProductManual($tagfa,$productcount){
 		$sql = "EXEC [dbo].[UPDATE_STATUS_PRODUCT_MANUAL] @tag_id= '{$tagfa}' , @count_product ='{$productcount}'";
+		$res = $this->db->query($sql);
+		if($res){
+		 return true;
+		}else{
+		 return false; 
+		}
+
+	}
+
+	public function updateStatusDefectCount($defectgroup,$staffcode){
+		$sql = "EXEC [dbo].[UPDATE_INFO_DEFECT_COUNT] @defect_group= '{$defectgroup}' ,@staff_code ='{$staffcode}'";
 		$res = $this->db->query($sql);
 		if($res){
 		 return true;
@@ -583,10 +622,10 @@ public function getdefectID($id)
 	}
 
 
-	public function getBoxNoToReprintTag($phase, $zone,$dateselect,$parno,$lotno)
+	public function getBoxNoToReprintTag($dateselect,$parno,$lotno)
 	{
 		
-		$sql = "EXEC [dbo].[GET_REPRINT_BOXNO_TAG] @phase_id= '{$phase}', @zone_id= '{$zone}', @date_select= '{$dateselect}', @part_no= '{$parno}', @lot_no= '{$lotno}'";
+		$sql = "EXEC [dbo].[GET_REPRINT_BOXNO_TAG]  @date_select= '{$dateselect}', @part_no= '{$parno}', @lot_no= '{$lotno}'";
 	 	$res = $this->db->query($sql);
 		$row = $res->result_array();
 		//echo "<pre>";												
@@ -723,6 +762,41 @@ public function getdefectID($id)
 		//echo "</pre>";
 		//pre คือการแยก Array ของแต่ละตัวออกมาให้อ่านง่าย
 	}
+
+	public function getQRProductToGenQr($tagfa)
+	{
+		
+		$sql = "EXEC [dbo].[GET_QRPRODUCT_TO_GENQR] @tagfa_id= '{$tagfa}'";
+	 	$res = $this->db->query($sql);
+		$row = $res->result_array();
+																	
+		return $row;
+	}
+	public function getInfoDefectCount($defectgroup,$datecurr)
+	{
+		
+		$sql = "EXEC [dbo].[GET_INFO_DEFECT_COUNT]  @defect_group= '{$defectgroup}', @date_curr= '{$datecurr}'";
+	 	$res = $this->db->query($sql);
+		$row = $res->result_array();
+		//echo "<pre>";												
+		return $row;
+		//echo "</pre>";
+		//pre คือการแยก Array ของแต่ละตัวออกมาให้อ่านง่าย
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	}
