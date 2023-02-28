@@ -88,6 +88,15 @@ class mainoffice_model extends CI_Model
 
 
 
+	public function getBoxnoAndLot($datecurrent,$partno)
+	{
+		
+		$sql = "EXEC [dbo].[GET_BOXNOANDLOT] @date_select= '{$datecurrent}' , @part_no= '{$partno}'";
+	 	$res = $this->db->query($sql);
+		$row = $res->result_array();
+																	
+		return $row;
+	}
 
 	public function getPosition($phase, $zone)
 	{
@@ -292,7 +301,15 @@ public function getdefectID($id)
 		return $row;
 	}
 
-
+	public function getTagQgate($tagqgate)
+	{
+		
+		$sql = "EXEC [dbo].[GET_REPRINT_TAG] @tag_qgate='{$tagqgate}'";
+	 	$res = $this->db->query($sql);
+		$row = $res->result_array();
+																
+		return $row;
+	}
 
 
 

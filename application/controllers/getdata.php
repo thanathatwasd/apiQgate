@@ -148,6 +148,21 @@ class getdata extends CI_Controller
           }
      }
 
+
+     public function getBoxnoAndLot()
+     {
+          $datecurrent = $_GET["datecurrent"];
+          $partno = $_GET["partno"];
+
+          $rs = $this->mainoffice_model->getBoxnoAndLot($datecurrent,$partno);
+
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
+     }
+
      public function getDefect()
      {
          
@@ -655,6 +670,19 @@ class getdata extends CI_Controller
           $defectgroup = $_GET["defectgroup"];
           $datecurr = $_GET["datecurr"];
           $rs = $this->mainoffice_model->getDefectCount($defectgroup,$datecurr);
+
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
+     }
+
+
+     public function getTagQgate()
+     {
+          $tagqgate = $_GET["tagqgate"];
+          $rs = $this->mainoffice_model->getTagQgate($tagqgate);
 
           if (empty($rs)) {
                echo "0";
