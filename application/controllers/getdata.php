@@ -427,10 +427,11 @@ class getdata extends CI_Controller
        
           $phase = $_GET["phase"];
           $zone = $_GET["zone"];
+          $station = $_GET["station"];
           $id = $this->mainoffice_model->Get_ID_table("mpa_id", "mst_plant_admin_app", "mpa_name = '$phase'");
           $id2 = $this->mainoffice_model->Get_ID_table("mza_id", "mst_zone_admin_app", "mza_name = '$zone'");
 
-          $rs = $this->mainoffice_model->getIdPhaseAndZone($id,  $id2);
+          $rs = $this->mainoffice_model->getIdPhaseAndZone($id,  $id2,$station);
 
           if (empty($rs)) {
                echo "0";
@@ -516,6 +517,41 @@ class getdata extends CI_Controller
           }
      }
 
+     public function getNumDefect()
+     {
+       
+
+          $datecurr = $_GET["datecurr"];
+          $configposition = $_GET["configposition"];
+          $partno = $_GET["partno"];
+          
+          $rs = $this->mainoffice_model->getNumDefect($datecurr,$configposition,$partno);
+
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
+     }
+
+     public function getBoxDefect()
+     {
+       
+
+          $datecurr = $_GET["datecurr"];
+          $configposition = $_GET["configposition"];
+          $partno = $_GET["partno"];
+          
+          $rs = $this->mainoffice_model->getBoxDefect($datecurr,$configposition,$partno);
+
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
+     }
+
+
 
      public function getBoxNoToReprintDefect()
      {
@@ -556,6 +592,16 @@ class getdata extends CI_Controller
           }
      }
 
+     public function getTagDefect()
+     {
+          $tagdefect = $_GET["tagdefectid"];
+          $rs = $this->mainoffice_model->getTagDefect($tagdefect);
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
+     }
 
      public function getMacAddress()
      {
@@ -571,6 +617,8 @@ class getdata extends CI_Controller
                echo json_encode($rs);
           }
      }
+
+  
 
      public function getZoneSetMenu()
      {
@@ -641,19 +689,44 @@ class getdata extends CI_Controller
                echo json_encode($rs);
           }
      }
+     public function getAllDefect()
+     {
+          
+          $defectcountid = $_GET["defectcountid"];
+          $rs = $this->mainoffice_model->getAllDefect($defectcountid);
+
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
+     }
+
+     public function getIDDefectCount()
+     {
+          $configposition = $_GET["configposition"];
+          $rs = $this->mainoffice_model->getIDDefectCount($configposition);
+
+          if (empty($rs)) {
+               echo "0";
+          } else {
+               echo json_encode($rs);
+          }
+     }
+
 
      public function getDefectCount()
      {
        
 
          
-          $productdefectid = $_GET["productdefectid"];
+          $configposition = $_GET["configposition"];
           
-          $datecurrent = $_GET["datecurrent"];
+         
           $producttype = $_GET["producttype"];
 
 
-          $rs = $this->mainoffice_model->getDefectCount($productdefectid,$datecurrent,$producttype);
+          $rs = $this->mainoffice_model->getDefectCount($configposition,$producttype);
 
           if (empty($rs)) {
                echo "0";
@@ -663,20 +736,20 @@ class getdata extends CI_Controller
      }
 
 
-     public function getInfoDefectCount()
-     {
+     // public function getInfoDefectCount()
+     // {
        
 
-          $defectgroup = $_GET["defectgroup"];
-          $datecurr = $_GET["datecurr"];
-          $rs = $this->mainoffice_model->getDefectCount($defectgroup,$datecurr);
+     //      $defectgroup = $_GET["defectgroup"];
+     //      $datecurr = $_GET["datecurr"];
+     //      $rs = $this->mainoffice_model->getDefectCount($defectgroup,$datecurr);
 
-          if (empty($rs)) {
-               echo "0";
-          } else {
-               echo json_encode($rs);
-          }
-     }
+     //      if (empty($rs)) {
+     //           echo "0";
+     //      } else {
+     //           echo json_encode($rs);
+     //      }
+     // }
 
 
      public function getTagQgate()

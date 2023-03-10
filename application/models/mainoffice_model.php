@@ -281,10 +281,10 @@ class mainoffice_model extends CI_Model
 																
 		return $row;
 	}
-	public function getDefectCount($productdefectid,$datecurrent,$producttype)
+	public function getDefectCount($configposition,$producttype)
 	{
 
-		$sql = "EXEC [dbo].[GET_DEFECT_COUNT] @product_defectid='{$productdefectid}', @date_current='{$datecurrent}', @product_type='{$producttype}'";
+		$sql = "EXEC [dbo].[GET_DEFECT_COUNT] @config_position='{$configposition}',  @product_type='{$producttype}'";
 	 	$res = $this->db->query($sql);
 		$row = $res->result_array();
 																
@@ -312,7 +312,24 @@ public function getdefectID($id)
 	}
 
 
-
+	public function getNumDefect($datecurr,$configposition,$partno)
+	{
+		
+		$sql = "EXEC [dbo].[GET_NUMDEFECT] @date_select='{$datecurr}', @config_position='{$configposition}', @part_no='{$partno}'";
+	 	$res = $this->db->query($sql);
+		$row = $res->result_array();
+																
+		return $row;
+	}
+	public function getBoxDefect($datecurr,$configposition,$partno)
+	{
+		
+		$sql = "EXEC [dbo].[GET_BOX_DEFECT] @date_select='{$datecurr}', @config_position='{$configposition}', @part_no='{$partno}'";
+	 	$res = $this->db->query($sql);
+		$row = $res->result_array();
+																
+		return $row;
+	}
 
 
 
@@ -407,10 +424,10 @@ public function getdefectID($id)
 		return $res;
 	}
 
-	public function insertInfoDefect($defectid,$qrid,$numng,$staffname)
+	public function insertInfoDefect($defectid,$qrid,$numng,$staffname,$defectcountid)
 	{
 
-		$sql = "EXEC [dbo].[INSERT_INFO_DEFECT] @defect_id= '{$defectid}', @qrproduct_id= '{$qrid}', @num_ng='{$numng}', @staff_code='{$staffname}'";
+		$sql = "EXEC [dbo].[INSERT_INFO_DEFECT] @defect_id= '{$defectid}', @qrproduct_id= '{$qrid}', @num_ng='{$numng}', @staff_code='{$staffname}', @defectcount_id='{$defectcountid}'";
 	 	$res = $this->db->query($sql);														
 		return $res;
 	}
@@ -446,10 +463,18 @@ public function getdefectID($id)
 
 
 
-	public function insertInfoDefectCount($defectgroupid,$productype,$countdefect,$staffcode,$partno)
+	public function insertInfoDefectCount($configposition,$productype,$countdefect,$staffcode)
 	{
 
-		$sql = "EXEC [dbo].[INSERT_INFO_DEFECT_COUNT] @defectgroup_id= '{$defectgroupid}', @product_type= '{$productype}', @count_defect= '{$countdefect}', @staff_code='{$staffcode}', @part_no='{$partno}'";
+		$sql = "EXEC [dbo].[INSERT_INFO_DEFECT_COUNT] @config_position= '{$configposition}', @product_type= '{$productype}', @count_defect= '{$countdefect}', @staff_code='{$staffcode}'";
+	 	$res = $this->db->query($sql);														
+		return $res;
+	}
+
+	public function insertinfotagdefect($defectcountid,$printtagcount,$staffcode,$tagdefect,$boxdefect)
+	{
+
+		$sql = "EXEC [dbo].[INSERT_TAG_DEFECT] @defect_count_id= '{$defectcountid}', @printtag_count= '{$printtagcount}', @staff_code= '{$staffcode}', @tag_defect='{$tagdefect}', @box_defect='{$boxdefect}'";
 	 	$res = $this->db->query($sql);														
 		return $res;
 	}
@@ -502,9 +527,9 @@ public function getdefectID($id)
 
 	}
 
-	public function updateDefectCount($defectgroupid,$countdefect,$staffcode,$datatecurrent,$producttype)
+	public function updateDefectCount($configposition,$countdefect,$staffcode,$datatecurrent,$producttype)
 	{
-		$sql = "EXEC [dbo].[UPDATE_DEFECT_COUNT] @defectgroup_id= '{$defectgroupid}' , @count_defect ='{$countdefect}', @staff_code ='{$staffcode}', @date_current ='{$datatecurrent}', @product_type ='{$producttype}'";
+		$sql = "EXEC [dbo].[UPDATE_DEFECT_COUNT] @config_position= '{$configposition}' , @count_defect ='{$countdefect}', @staff_code ='{$staffcode}', @date_current ='{$datatecurrent}', @product_type ='{$producttype}'";
 		$res = $this->db->query($sql);
 		if($res){
 		 return true;
@@ -562,6 +587,19 @@ public function getdefectID($id)
 
 	}
 
+
+	public function updateconfigdeletemacaddold($macaddress){
+		$sql = "EXEC [dbo].[UPDATE_CONFIG_DELETE_MAC_OLD] @mac_address= '{$macaddress}'";
+		$res = $this->db->query($sql);
+		if($res){
+		 return true;
+		}else{
+		 return false; 
+		}
+
+	}
+
+
 	
 	public function updateFlgProductManual($tagfa,$productcount){
 		$sql = "EXEC [dbo].[UPDATE_STATUS_PRODUCT_MANUAL] @tag_id= '{$tagfa}' , @count_product ='{$productcount}'";
@@ -592,10 +630,10 @@ public function getdefectID($id)
 	///เครื่องใหม่
 
 
-	public function getIdPhaseAndZone($phase, $zone)
+	public function getIdPhaseAndZone($phase, $zone, $station)
 	{
 		
-		$sql = "EXEC [dbo].[GET_ID_PHASE_STATION] @phase_id= '{$phase}',@zone_id= '{$zone}'";
+		$sql = "EXEC [dbo].[GET_ID_PHASE_STATION] @phase_id= '{$phase}',@zone_id= '{$zone}',@station_id= '{$station}'";
 	 	$res = $this->db->query($sql);
 		$row = $res->result_array();
 															
@@ -611,6 +649,7 @@ public function getdefectID($id)
 															
 		return $row;
 	}
+
 
 
 
@@ -666,7 +705,20 @@ public function getdefectID($id)
 	public function getDataScanPrintDefectByTag($tagdefect)
 	{
 		
+
 		$sql = "EXEC [dbo].[GET_REPRINT_SCANTAG_DEFECT] @tag_defect= '{$tagdefect}'";
+	 	$res = $this->db->query($sql);
+		$row = $res->result_array();
+															
+		return $row;
+	}
+
+	
+	public function getTagDefect($tagdefect)
+	{
+		
+
+		$sql = "EXEC [dbo].[GET_TAG_DEFECT] @tag_defect= '{$tagdefect}'";
 	 	$res = $this->db->query($sql);
 		$row = $res->result_array();
 															
@@ -684,18 +736,24 @@ public function getdefectID($id)
 	}
 
 
-	public function insertlogreprintDefect($tagconpleteid,$empcode)
+	// public function insertlogreprintDefect($tagconpleteid,$empcode)
+	// {
+
+	// 	$sql = "EXEC [dbo].[INSERT_LOG_REPRINT_TAG_DEFECT] @tag_complete= '{$tagconpleteid}', @staff_code= '{$empcode}'";
+	//  	$res = $this->db->query($sql);														
+	// 	return $res;
+	// }
+
+	public function insertlogreprintdefect($tagdefectid,$empcode)
 	{
 
-		$sql = "EXEC [dbo].[INSERT_LOG_REPRINT_TAG_DEFECT] @tag_complete= '{$tagconpleteid}', @staff_code= '{$empcode}'";
+		$sql = "EXEC [dbo].[INSERT_LOG_REPRINT_DEFECT] @tagdefect_id= '{$tagdefectid}',@emp_code= '{$empcode}'";
 	 	$res = $this->db->query($sql);														
 		return $res;
 	}
-
-
-	public function updateConfigMacAddress($phase,$zone,$station,$macaddress,$empcode){
+	public function updateConfigMacAddress($phase,$zone,$station,$macaddress,$empcode,$setdefaultpartno){
 		
-		$sql = "EXEC [dbo].[UPDATE_CONFIG_MAC_ADDRESS] @phase_id= '{$phase}' , @zone_id ='{$zone}', @station_id ='{$station}', @mac_address ='{$macaddress}', @emp_code ='{$empcode}'";
+		$sql = "EXEC [dbo].[UPDATE_CONFIG_MAC_ADDRESS] @phase_id= '{$phase}' , @zone_id ='{$zone}', @station_id ='{$station}', @mac_address ='{$macaddress}', @emp_code ='{$empcode}', @set_defaultpartno ='{$setdefaultpartno}'";
 		$res = $this->db->query($sql);
 		if($res){
 		 return true;
@@ -789,6 +847,28 @@ public function getdefectID($id)
 																	
 		return $row;
 	}
+
+	public function getAllDefect($defectcountid)
+	{
+		
+		$sql = "EXEC [dbo].[GET_ALL_DEFECT] @defectcount_id= '{$defectcountid}'";
+	 	$res = $this->db->query($sql);
+		$row = $res->result_array();
+																	
+		return $row;
+	}
+
+
+	public function getIDDefectCount($configposition)
+	{
+		
+		$sql = "EXEC [dbo].[GET_ID_DEFECT_COUNT] @config_position= '{$configposition}'";
+	 	$res = $this->db->query($sql);
+		$row = $res->result_array();
+																	
+		return $row;
+	}
+
 	public function getInfoDefectCount($defectgroup,$datecurr)
 	{
 		

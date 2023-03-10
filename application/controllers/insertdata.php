@@ -10,6 +10,17 @@ class insertdata extends CI_Controller
 		echo json_encode($rs);
 
     }
+
+
+    public function insertlogreprintdefect()
+    {
+          $tagdefectid = $_GET["tagdefectid"];
+          $empcode = $_GET["empcode"];
+ 
+        $rs = $this->mainoffice_model->insertlogreprintdefect($tagdefectid,$empcode);
+		echo json_encode($rs);
+
+    }
     public function insertlogpart()
     {
       parse_str($_SERVER['QUERY_STRING'], $_GET); 
@@ -38,13 +49,13 @@ class insertdata extends CI_Controller
     
     public function insertInfoDefectCount()
     {
-          $defectgroupid = $_GET["defectgroupid"];
-          
+      $configposition = $_GET["configposition"];
           $productype = $_GET["productype"];
           $countdefect = $_GET["countdefect"];
           $staffcode = $_GET["staffcode"];
-          $partno = $_GET["partno"];
-        $rs = $this->mainoffice_model->insertInfoDefectCount($defectgroupid,$productype,$countdefect,$staffcode,$partno);
+          
+          
+        $rs = $this->mainoffice_model->insertInfoDefectCount($configposition,$productype,$countdefect,$staffcode);
 		echo json_encode($rs);
 
     }
@@ -139,11 +150,26 @@ class insertdata extends CI_Controller
           $qrid = $_GET["qrid"];
           $numng = $_GET["numng"];
           $staffname = $_GET["staffname"];
-        $rs = $this->mainoffice_model->insertInfoDefect($defectid,$qrid,$numng,$staffname);
+          $defectcountid = $_GET["defectcountid"];
+          
+        $rs = $this->mainoffice_model->insertInfoDefect($defectid,$qrid,$numng,$staffname,$defectcountid);
 		echo json_encode($rs);
 
     }
 
+    
+    public function insertinfotagdefect()
+    {
+          $defectcountid = $_GET["defectcountid"];
+          $printtagcount = $_GET["printtagcount"];
+          $staffcode = $_GET["staffcode"];
+          $tagdefect = $_GET["tagdefect"];
+          $boxdefect = $_GET["boxdefect"];
+          
+        $rs = $this->mainoffice_model->insertinfotagdefect($defectcountid,$printtagcount,$staffcode,$tagdefect,$boxdefect);
+		echo json_encode($rs);
+
+    }
 
     public function insertDefectcount()
     {
@@ -172,18 +198,18 @@ class insertdata extends CI_Controller
 
     }
 
-    public function insertlogreprintDefect()
-    {
-          $tagconpleteid = $_GET["tagconpleteid"];
-          $empcode = $_GET["empcode"];
+    // public function insertlogreprintDefect()
+    // {
+    //       $tagconpleteid = $_GET["tagconpleteid"];
+    //       $empcode = $_GET["empcode"];
 
 
    
          
-        $rs = $this->mainoffice_model->insertlogreprintDefect($tagconpleteid,$empcode);
-		echo json_encode($rs);
+    //     $rs = $this->mainoffice_model->insertlogreprintDefect($tagconpleteid,$empcode);
+		// echo json_encode($rs);
 
-    }
+    // }
 
 
 

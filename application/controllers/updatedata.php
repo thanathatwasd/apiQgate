@@ -81,6 +81,16 @@ class updatedata extends CI_Controller
 		
 	   }
 
+
+	   public function updateconfigdeletemacaddold(){
+		$macaddress =  $_GET["macaddress"];
+
+          
+		$res= $this->mainoffice_model->updateconfigdeletemacaddold($macaddress );
+		echo json_encode($res);
+		
+	   }
+
 	   
 
 
@@ -110,22 +120,22 @@ class updatedata extends CI_Controller
 		$station = $_GET["station"];
 		$macaddress = $_GET["macaddress"];
 		$empcode = $_GET["empcode"];
+		$setdefaultpartno = $_GET["setdefaultpartno"];
 		
-		
-		$res= $this->mainoffice_model->updateConfigMacAddress($phase,$zone,$station,$macaddress,$empcode);
+		$res= $this->mainoffice_model->updateConfigMacAddress($phase,$zone,$station,$macaddress,$empcode,$setdefaultpartno);
 		echo json_encode($res);
 		
 	   }
 
 	   public function updateDefectCount(){
-		
-		$defectgroupid = $_GET["defectgroupid"];
-		
+
+		$configposition = $_GET["configposition"];
 		$countdefect = $_GET["countdefect"];
 		$staffcode = $_GET["staffcode"];
 		$datatecurrent = $_GET["datatecurrent"];
 		$producttype = $_GET["producttype"];
-		$res= $this->mainoffice_model->updateDefectCount($defectgroupid,$countdefect,$staffcode,$datatecurrent,$producttype);
+		
+		$res= $this->mainoffice_model->updateDefectCount($configposition,$countdefect,$staffcode,$datatecurrent,$producttype);
 		echo json_encode($res);
 		
 	   }
